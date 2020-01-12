@@ -18,6 +18,11 @@ exports.getAllStudents = (req, res, next) => {
   });
 };
 
+exports.updateStudent = (req, res, next) => {
+  console.log(req.body);
+  // const { _id, firstName, lastName, grade, additionalInfo } = req.body;
+};
+
 exports.createStudent = (req, res, next) => {
   const { firstName, lastName, grade, additionalInfo } = req.body;
   const newStudent = new Student({
