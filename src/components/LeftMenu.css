@@ -4,3 +4,7 @@
   background: #bd6b6b;
   padding: 2vh 2vw;
 }
+
+a {
+  text-decoration: none;
+}
