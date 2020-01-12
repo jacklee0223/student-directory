@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component, Fragment } from 'react';
+import React, { Component } from 'react';
 import './StudentsList.css';
 import { withStyles } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
@@ -80,10 +80,10 @@ class StudentsList extends Component {
     const studentsList = _.get(this.props, 'students_list');
 
     return (
-      <Fragment>
+      <div>
         <SearchBar handleSearchInput={this.handleSearchInput} {...this.props} />
         <div className="table-wrapper">{this.renderTable(studentsList)}</div>
-      </Fragment>
+      </div>
     );
   }
 }

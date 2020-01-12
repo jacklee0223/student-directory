@@ -1,11 +1,14 @@
 import React from 'react';
+import './App.css';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
 import StudentsList from 'components/StudentsList';
+import LeftMenu from 'components/LeftMenu';
 
 function App(props) {
   return (
-    <div>
+    <div className="app">
+      <LeftMenu />
       <StudentsList {...props} />
     </div>
   );
