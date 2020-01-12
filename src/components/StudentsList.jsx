@@ -1,5 +1,6 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
+import './StudentsList.css';
 import { withStyles } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -35,7 +36,6 @@ class StudentsList extends Component {
               <TableCell align="right">FIRST NAME</TableCell>
               <TableCell align="right">LAST NAME</TableCell>
               <TableCell align="right">GRADE</TableCell>
-              <TableCell align="right">ADDITIONAL INFO</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{this.renderStudentsList(studentsList)}</TableBody>
@@ -51,7 +51,6 @@ class StudentsList extends Component {
           <TableCell align="right">{row.firstName}</TableCell>
           <TableCell align="right">{row.lastName}</TableCell>
           <TableCell align="right">{row.grade}</TableCell>
-          <TableCell align="right">{row.additionalInfo}</TableCell>
         </TableRow>
       ));
     });
@@ -60,7 +59,9 @@ class StudentsList extends Component {
   render() {
     const studentsList = _.get(this.props, 'students_list');
 
-    return <div>{this.renderTable(studentsList)}</div>;
+    return (
+      <div className="table-wrapper">{this.renderTable(studentsList)}</div>
+    );
   }
 }
 
