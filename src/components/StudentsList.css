@@ -1,3 +1,17 @@
+.students-list-wrapper {
+  margin: 15vh 15vh;
+}
+
 .table-wrapper {
   max-width: 50vw;
+}
+
+.edit-icon {
+  width: 20px !important;
+  height: 20px !important;
+  margin-top: 10px;
+}
+
+.edit-icon:hover {
+  cursor: pointer;
 }

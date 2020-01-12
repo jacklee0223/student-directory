@@ -4,13 +4,16 @@ import './StudentsList.css';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
 import { withStyles } from '@material-ui/styles';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper
+} from '@material-ui/core';
+import EditIcon from '@material-ui/icons/Edit';
 import SearchBar from 'components/SearchBar';
 
 const styles = theme => ({
@@ -37,6 +40,10 @@ class StudentsList extends Component {
     this.setState({ searchTerm });
   };
 
+  handleEdit = studentId => {
+    console.log('studentId', studentId);
+  };
+
   renderTable = studentsList => {
     const { classes } = this.props;
 
@@ -48,6 +55,7 @@ class StudentsList extends Component {
               <TableCell align="right">FIRST NAME</TableCell>
               <TableCell align="right">LAST NAME</TableCell>
               <TableCell align="right">GRADE</TableCell>
+              <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>{this.renderStudentsList(studentsList)}</TableBody>
@@ -61,8 +69,8 @@ class StudentsList extends Component {
     const filtered = _.filter(
       studentsList,
       student =>
-        _.lowerCase(student.firstName) === _.lowerCase(searchTerm) ||
-        _.lowerCase(student.lastName) === _.lowerCase(searchTerm)
+        _.includes(_.lowerCase(student.firstName), _.lowerCase(searchTerm)) ||
+        _.includes(_.lowerCase(student.lastName), _.lowerCase(searchTerm))
     );
 
     const searchFiltered = _.size(searchTerm) ? filtered : studentsList;
@@ -73,6 +81,12 @@ class StudentsList extends Component {
           <TableCell align="right">{student.firstName}</TableCell>
           <TableCell align="right">{student.lastName}</TableCell>
           <TableCell align="right">{student.grade}</TableCell>
+          <TableCell align="right">
+            <EditIcon
+              className="edit-icon"
+              onClick={() => this.handleEdit(student._id)}
+            />
+          </TableCell>
         </TableRow>
       );
     });
@@ -82,7 +96,7 @@ class StudentsList extends Component {
     const studentsList = _.get(this.props, 'students_list');
 
     return (
-      <div>
+      <div className="students-list-wrapper">
         <SearchBar handleSearchInput={this.handleSearchInput} {...this.props} />
         <div className="table-wrapper">{this.renderTable(studentsList)}</div>
       </div>
