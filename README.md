@@ -1,8 +1,16 @@
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
+## Install MongoDB before running the project
+
+https://docs.mongodb.com/manual/installation/
+
 ## Available Scripts
 
 In the project directory, you can run:
+
+## `npm dev`
+
+Boots up MongoDB, starts Node server, starts client React app
 
 ### `npm start`
 
