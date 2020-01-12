@@ -35,6 +35,17 @@ exports.createStudent = (req, res, next) => {
   newStudent.save(error => {
     if (error) return next(error);
 
-    res.json({ success: true });
+    MongoClient.connect(url, (error, db) => {
+      if (error) throw error;
+      const dbo = db.db('students-directory');
+      dbo
+        .collection('students')
+        .find({})
+        .toArray(function(error, result) {
+          if (error) throw error;
+          res.json(result);
+          db.close();
+        });
+    });
   });
 };

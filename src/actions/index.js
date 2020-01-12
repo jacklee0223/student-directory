@@ -11,3 +11,16 @@ export const getStudentsList = () => async dispatch => {
     console.log(`Error`);
   }
 };
+
+export const createStudent = (formProps, callback) => async dispatch => {
+  try {
+    const response = await axios.post(
+      'http://localhost:5000/api/students/create',
+      formProps
+    );
+    dispatch({ type: SET_STUDENTS_LIST, payload: response.data });
+    callback();
+  } catch (e) {
+    console.log(`Error`);
+  }
+};

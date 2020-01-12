@@ -8,6 +8,8 @@ import {
   Button
 } from '@material-ui/core';
 import './StudentInfoForm.css';
+import { connect } from 'react-redux';
+import * as actions from 'actions';
 
 class StudentInfoForm extends Component {
   constructor(props) {
@@ -28,7 +30,20 @@ class StudentInfoForm extends Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    console.log('submit', this.state);
+    const { createStudent } = this.props;
+    const { firstName, lastName, grade, addtionalInfo } = this.state;
+
+    if (!_.size(firstName) || !_.size(lastName))
+      alert('Need to enter first and last name');
+
+    const formProps = {
+      firstName,
+      lastName,
+      grade,
+      addtionalInfo
+    };
+
+    createStudent(formProps, () => this.props.history.push('/'));
   };
 
   render() {
@@ -82,4 +97,8 @@ class StudentInfoForm extends Component {
   }
 }
 
-export default StudentInfoForm;
+function mapStateToProps(state) {
+  return { students_list: state.students_list };
+}
+
+export default connect(mapStateToProps, actions)(StudentInfoForm);
