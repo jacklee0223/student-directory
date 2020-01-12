@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './StudentsList.css';
 import { withStyles } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
@@ -9,8 +9,7 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import { connect } from 'react-redux';
-import * as actions from 'actions';
+import SearchBar from 'components/SearchBar';
 
 const styles = theme => ({
   table: {
@@ -19,11 +18,22 @@ const styles = theme => ({
 });
 
 class StudentsList extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchTerm: ''
+    };
+  }
   componentDidMount() {
     const { getStudentsList } = this.props;
 
     getStudentsList();
   }
+
+  handleSearchInput = searchTerm => {
+    this.setState({ searchTerm });
+  };
 
   renderTable = studentsList => {
     const { classes } = this.props;
@@ -45,14 +55,24 @@ class StudentsList extends Component {
   };
 
   renderStudentsList = studentsList => {
-    return _.map(studentsList, student => {
-      return studentsList.map(row => (
-        <TableRow key={row._id}>
-          <TableCell align="right">{row.firstName}</TableCell>
-          <TableCell align="right">{row.lastName}</TableCell>
-          <TableCell align="right">{row.grade}</TableCell>
+    const { searchTerm } = this.state;
+    const filtered = _.filter(
+      studentsList,
+      student =>
+        _.lowerCase(student.firstName) === _.lowerCase(searchTerm) ||
+        _.lowerCase(student.lastName) === _.lowerCase(searchTerm)
+    );
+
+    const searchFiltered = _.size(searchTerm) ? filtered : studentsList;
+
+    return _.map(searchFiltered, student => {
+      return (
+        <TableRow key={student._id}>
+          <TableCell align="right">{student.firstName}</TableCell>
+          <TableCell align="right">{student.lastName}</TableCell>
+          <TableCell align="right">{student.grade}</TableCell>
         </TableRow>
-      ));
+      );
     });
   };
 
@@ -60,16 +80,12 @@ class StudentsList extends Component {
     const studentsList = _.get(this.props, 'students_list');
 
     return (
-      <div className="table-wrapper">{this.renderTable(studentsList)}</div>
+      <Fragment>
+        <SearchBar handleSearchInput={this.handleSearchInput} {...this.props} />
+        <div className="table-wrapper">{this.renderTable(studentsList)}</div>
+      </Fragment>
     );
   }
 }
 
-function mapStateToProps(state) {
-  return { students_list: state.students_list };
-}
-
-export default connect(
-  mapStateToProps,
-  actions
-)(withStyles(styles)(StudentsList));
+export default withStyles(styles)(StudentsList);

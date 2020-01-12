@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import React from 'react';
 import { makeStyles, fade } from '@material-ui/core/styles';
 import InputBase from '@material-ui/core/InputBase';
@@ -43,7 +44,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-function SearchBar() {
+function SearchBar(props) {
+  const { handleSearchInput } = props;
   const classes = useStyles();
 
   return (
@@ -58,6 +60,7 @@ function SearchBar() {
           input: classes.inputInput
         }}
         inputProps={{ 'aria-label': 'search' }}
+        onChange={e => handleSearchInput(_.get(e, 'target.value'))}
       />
     </div>
   );

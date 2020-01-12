@@ -1,6 +1,8 @@
 import { SET_STUDENTS_LIST } from 'actions/types';
 
-const INITIAL_STATE = {};
+const INITIAL_STATE = {
+  students_list: []
+};
 
 export default (state = INITIAL_STATE, action) => {
   const { type, payload } = action;
