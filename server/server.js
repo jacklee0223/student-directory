@@ -9,7 +9,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 // DB setup
-mongoose.connect('mongodb://localhost/auth', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost/students-directory', {
+  useNewUrlParser: true
+});
 
 // Middlewares
 app.use(morgan('combined'));
