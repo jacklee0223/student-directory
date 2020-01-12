@@ -40,7 +40,7 @@ export const updateStudent = (formProps, callback) => async dispatch => {
 
 export const removeStudent = (formProps, callback) => async dispatch => {
   try {
-    const response = await axios.delete(
+    const response = await axios.put(
       'http://localhost:5000/api/students/removeStudent',
       formProps
     );

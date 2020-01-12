@@ -6,12 +6,14 @@
   max-width: 50vw;
 }
 
-.edit-icon {
+.edit-icon,
+.delete-icon {
   width: 20px !important;
   height: 20px !important;
   margin-top: 10px;
 }
 
-.edit-icon:hover {
+.edit-icon:hover,
+.delete-icon:hover {
   cursor: pointer;
 }

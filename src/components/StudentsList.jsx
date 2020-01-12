@@ -14,6 +14,7 @@ import {
   Paper
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
+import DeleteIcon from '@material-ui/icons/Delete';
 import SearchBar from 'components/SearchBar';
 
 const styles = theme => ({
@@ -47,6 +48,12 @@ class StudentsList extends Component {
     );
   };
 
+  handleDelete = _id => {
+    const { removeStudent } = this.props;
+
+    removeStudent({ _id });
+  };
+
   renderTable = studentsList => {
     const { classes } = this.props;
 
@@ -58,6 +65,7 @@ class StudentsList extends Component {
               <TableCell align="right">FIRST NAME</TableCell>
               <TableCell align="right">LAST NAME</TableCell>
               <TableCell align="right">GRADE</TableCell>
+              <TableCell align="right"></TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
@@ -88,6 +96,12 @@ class StudentsList extends Component {
             <EditIcon
               className="edit-icon"
               onClick={() => this.handleEdit(student)}
+            />
+          </TableCell>
+          <TableCell align="right">
+            <DeleteIcon
+              className="delete-icon"
+              onClick={() => this.handleDelete(student._id)}
             />
           </TableCell>
         </TableRow>
