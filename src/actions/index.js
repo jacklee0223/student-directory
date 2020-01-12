@@ -24,3 +24,29 @@ export const createStudent = (formProps, callback) => async dispatch => {
     console.log(`Error`);
   }
 };
+
+export const updateStudent = (formProps, callback) => async dispatch => {
+  try {
+    const response = await axios.put(
+      'http://localhost:5000/api/students/update',
+      formProps
+    );
+    dispatch({ type: SET_STUDENTS_LIST, payload: response.data });
+    callback();
+  } catch (e) {
+    console.log(`Error`);
+  }
+};
+
+export const removeStudent = (formProps, callback) => async dispatch => {
+  try {
+    const response = await axios.delete(
+      'http://localhost:5000/api/students/removeStudent',
+      formProps
+    );
+    dispatch({ type: SET_STUDENTS_LIST, payload: response.data });
+    callback();
+  } catch (e) {
+    console.log(`Error`);
+  }
+};

@@ -11,6 +11,7 @@ export default function App(props) {
       <LeftMenu />
       <Route path="/" exact component={StudentsList} />
       <Route path="/add" component={StudentInfoForm} />
+      <Route path="/update" component={StudentInfoForm} />
     </div>
   );
 }

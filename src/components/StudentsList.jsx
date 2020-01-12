@@ -40,8 +40,11 @@ class StudentsList extends Component {
     this.setState({ searchTerm });
   };
 
-  handleEdit = studentId => {
-    console.log('studentId', studentId);
+  handleEdit = student => {
+    const { _id, firstName, lastName, grade, additionalInfo } = student;
+    this.props.history.push(
+      `/update?_id=${_id}&firstName=${firstName}&lastName=${lastName}&grade=${grade}&additionalInfo=${additionalInfo}`
+    );
   };
 
   renderTable = studentsList => {
@@ -84,7 +87,7 @@ class StudentsList extends Component {
           <TableCell align="right">
             <EditIcon
               className="edit-icon"
-              onClick={() => this.handleEdit(student._id)}
+              onClick={() => this.handleEdit(student)}
             />
           </TableCell>
         </TableRow>

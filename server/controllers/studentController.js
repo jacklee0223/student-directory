@@ -61,12 +61,30 @@ exports.updateStudent = (req, res, next) => {
     if (error) throw error;
     const dbo = db.db('students-directory');
     const collection = dbo.collection('students');
-    const myquery = { _id: objId };
     const newvalues = { $set: updateFields };
-    collection.updateOne(myquery, newvalues, error => {
+    collection.updateOne({ _id: objId }, newvalues, error => {
       if (error) throw error;
 
       collection.find({}).toArray(function(error, result) {
+        if (error) throw error;
+        res.json(result);
+        db.close();
+      });
+    });
+  });
+};
+
+exports.removeStudent = (req, res, next) => {
+  const objId = ObjectID(req.body._id);
+
+  MongoClient.connect(url, function(error, db) {
+    if (error) throw error;
+    const dbo = db.db('students-directory');
+    const collection = dbo.collection('students');
+    collection.deleteOne({ _id: objId }, (error, obj) => {
+      if (error) throw error;
+
+      collection.find({}).toArray((error, result) => {
         if (error) throw error;
         res.json(result);
         db.close();

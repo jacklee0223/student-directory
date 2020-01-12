@@ -1,4 +1,5 @@
 import _ from 'lodash';
+import queryString from 'query-string';
 import React, { Component } from 'react';
 import {
   FormGroup,
@@ -16,11 +17,26 @@ class StudentInfoForm extends Component {
     super(props);
 
     this.state = {
+      _id: '',
       firstName: '',
       lastName: '',
-      grade: null,
-      addtionalInfo: ''
+      grade: '',
+      additionalInfo: ''
     };
+  }
+
+  componentDidMount() {
+    const search = _.get(this.props, 'location.search');
+    const queries = queryString.parse(search);
+    const { _id, firstName, lastName, grade, additionalInfo } = queries;
+
+    this.setState({
+      _id,
+      firstName,
+      lastName,
+      grade,
+      additionalInfo
+    });
   }
 
   handleChange = (e, fieldName) => {
@@ -28,10 +44,12 @@ class StudentInfoForm extends Component {
     this.setState({ [fieldName]: value });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e, isUpdate) => {
     e.preventDefault();
-    const { createStudent } = this.props;
-    const { firstName, lastName, grade, addtionalInfo } = this.state;
+    const { createStudent, updateStudent } = this.props;
+    const { _id, firstName, lastName, grade, additionalInfo } = this.state;
+    const search = _.get(this.props, 'location.search');
+    console.log(search);
 
     if (!_.size(firstName) || !_.size(lastName))
       alert('Need to enter first and last name');
@@ -40,13 +58,21 @@ class StudentInfoForm extends Component {
       firstName,
       lastName,
       grade,
-      addtionalInfo
+      additionalInfo
     };
 
-    createStudent(formProps, () => this.props.history.push('/'));
+    if (isUpdate) {
+      updateStudent({ ...formProps, _id }, () => this.props.history.push('/'));
+    } else {
+      createStudent(formProps, () => this.props.history.push('/'));
+    }
   };
 
   render() {
+    const { firstName, lastName, grade, additionalInfo } = this.state;
+    const pathname = _.get(this.props, 'location.pathname');
+    const isUpdate = pathname === '/update';
+
     return (
       <div className="form-wrapper">
         <h3>Create New Student</h3>
@@ -57,6 +83,7 @@ class StudentInfoForm extends Component {
               id="first-name"
               aria-describedby="Enter First Name"
               onChange={e => this.handleChange(e, 'firstName')}
+              value={firstName}
             />
           </FormControl>
           <FormControl>
@@ -65,6 +92,7 @@ class StudentInfoForm extends Component {
               id="last-name"
               aria-describedby="Enter Last Name"
               onChange={e => this.handleChange(e, 'lastName')}
+              value={lastName}
             />
           </FormControl>
           <FormControl>
@@ -73,6 +101,7 @@ class StudentInfoForm extends Component {
               id="grade"
               aria-describedby="Enter Grade"
               onChange={e => this.handleChange(e, 'grade')}
+              value={grade}
             />
           </FormControl>
           <FormControl>
@@ -81,15 +110,16 @@ class StudentInfoForm extends Component {
               id="additional-info"
               aria-describedby="Enter Additional Info"
               onChange={e => this.handleChange(e, 'additionalInfo')}
+              value={additionalInfo}
             />
           </FormControl>
           <Button
             className="submit-button"
             variant="contained"
             color="primary"
-            onClick={this.handleSubmit}
+            onClick={e => this.handleSubmit(e, isUpdate)}
           >
-            Submit
+            {isUpdate ? 'Update Info' : 'Create New'}
           </Button>
         </FormGroup>
       </div>

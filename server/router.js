@@ -4,4 +4,5 @@ module.exports = app => {
   app.get('/api/students/getall', StudentController.getAllStudents);
   app.post('/api/students/create', StudentController.createStudent);
   app.put('/api/students/update', StudentController.updateStudent);
+  app.delete('/api/students/removeStudent', StudentController.removeStudent);
 };
