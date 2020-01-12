@@ -1,6 +1,8 @@
 import _ from 'lodash';
 import React, { Component } from 'react';
 import './StudentsList.css';
+import { connect } from 'react-redux';
+import * as actions from 'actions';
 import { withStyles } from '@material-ui/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -88,4 +90,11 @@ class StudentsList extends Component {
   }
 }
 
-export default withStyles(styles)(StudentsList);
+function mapStateToProps(state) {
+  return { students_list: state.students_list };
+}
+
+export default connect(
+  mapStateToProps,
+  actions
+)(withStyles(styles)(StudentsList));
