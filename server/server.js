@@ -1,6 +1,5 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const http = require('http');
 const morgan = require('morgan');
 const router = require('./router');
 const mongoose = require('mongoose');

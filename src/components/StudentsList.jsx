@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import './StudentsList.css';
 import { connect } from 'react-redux';
 import * as actions from 'actions';
@@ -11,7 +11,8 @@ import {
   TableContainer,
   TableHead,
   TableRow,
-  Paper
+  Paper,
+  Tooltip
 } from '@material-ui/core';
 import EditIcon from '@material-ui/icons/Edit';
 import DeleteIcon from '@material-ui/icons/Delete';
@@ -88,23 +89,25 @@ class StudentsList extends Component {
 
     return _.map(searchFiltered, student => {
       return (
-        <TableRow key={student._id}>
-          <TableCell align="right">{student.firstName}</TableCell>
-          <TableCell align="right">{student.lastName}</TableCell>
-          <TableCell align="right">{student.grade}</TableCell>
-          <TableCell align="right">
-            <EditIcon
-              className="edit-icon"
-              onClick={() => this.handleEdit(student)}
-            />
-          </TableCell>
-          <TableCell align="right">
-            <DeleteIcon
-              className="delete-icon"
-              onClick={() => this.handleDelete(student._id)}
-            />
-          </TableCell>
-        </TableRow>
+        <Tooltip title={student.additionalInfo} aria-label="additional info">
+          <TableRow key={student._id}>
+            <TableCell align="right">{student.firstName}</TableCell>
+            <TableCell align="right">{student.lastName}</TableCell>
+            <TableCell align="right">{student.grade}</TableCell>
+            <TableCell align="right">
+              <EditIcon
+                className="edit-icon"
+                onClick={() => this.handleEdit(student)}
+              />
+            </TableCell>
+            <TableCell align="right">
+              <DeleteIcon
+                className="delete-icon"
+                onClick={() => this.handleDelete(student._id)}
+              />
+            </TableCell>
+          </TableRow>
+        </Tooltip>
       );
     });
   };
